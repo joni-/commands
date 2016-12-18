@@ -1,1 +1,4 @@
 entries.json
+*.pyc
+venv
+config.json

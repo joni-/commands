@@ -5,28 +5,17 @@ import json
 import os
 import sys
 
-FILE = 'entries.json';
-
-def read_data_json():
-  if not os.path.isfile(FILE):
-    return []
-
-  with open(FILE, 'r') as f:
-    contents = f.read()
-    if not contents.strip():
-      return []
-    return json.loads(contents);
+import api
 
 def add_entry(command, tags, comment):
-  data = read_data_json()
+  data = api.get_commands()
   entry = {'command': command, 'tags': tags, 'comment': comment}
   data.append(entry)
-  with open(FILE, 'w') as f:
-    f.write(json.dumps(data, indent=2))
+  api.write_commands(data)
 
 def find(tags):
   tags = set(tags)
-  data = read_data_json()
+  data = api.get_commands()
   for entry in data:
     entry_tags = set(entry['tags'])
     if len(tags.intersection(entry_tags)) == len(tags):
